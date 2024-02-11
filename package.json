@@ -1,0 +1,27 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "Task for create simple crud api based on Node.js server",
+  "main": "dist/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json",
+    "start:dev": "nodemon ./src/index.ts",
+    "start:prod": "tsc -p tsconfig.json && node ./dist/index.js",
+    "start:multi": "nodemon ./src/index.ts --multi",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "maxsimusprime",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.2"
+  }
+}
