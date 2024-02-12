@@ -2,7 +2,7 @@ import type { Controller } from "types/types";
 import { db } from "../models/users";
 
 export const read: Controller = async (request, response) => {
-  if (request.url?.match(/^\/api\/users\/?$/)) {
+  if (request.url?.match(/^\/api\/users$/)) {
     const users = await db.getAllUsers();
 
     response.writeHead(200, { "Content-Type": "application/json" });
@@ -11,7 +11,7 @@ export const read: Controller = async (request, response) => {
     return;
   }
 
-  if (request.url?.match(/^\/api\/users\/([0-9]+)$/)) {
+  if (request.url?.match(/^\/api\/users\/([abcdef\-0-9]+)$/)) {
     const id = request.url.split('/')[3];
     
     if (id) {
@@ -32,6 +32,6 @@ export const read: Controller = async (request, response) => {
   }
 
   response.statusCode = 400;
-  response.statusMessage = "Invalid User Id or API Endpoint URL";
+  response.statusMessage = "Invalid User Id or User Id Was Not Provided";
   response.end();
 };
