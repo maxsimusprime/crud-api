@@ -3,15 +3,6 @@ import { db } from "../models/users";
 import { isUserDataValid } from "../utils/isUserDataValid";
 
 export const update: Controller = async (request, response) => {
-  if (request.url?.match(/^\/api\/users$/)) {
-    const users = await db.getAllUsers();
-
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.write(JSON.stringify(users));
-    response.end();
-    return;
-  }
-
   if (request.url?.match(/^\/api\/users\/([abcdef\-0-9]+)$/)) {
     const id = request.url.split("/")[3];
 
@@ -48,7 +39,7 @@ export const update: Controller = async (request, response) => {
               return user;
             })
             .then((user) => {
-              response.writeHead(201, { "Content-Type": "application/json" });
+              response.writeHead(200, { "Content-Type": "application/json" });
               response.write(JSON.stringify(user));
               response.end();
             })

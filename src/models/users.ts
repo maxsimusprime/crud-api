@@ -31,6 +31,15 @@ class DataBase {
       resolve(newUser);
     });
   }
+
+  public async removeUser(id: string): Promise<void> {
+    return Promise.resolve().then(() => {
+      this.users = this.users.reduce(
+        (acc: User[], user: User) => (user.id !== id ? [...acc, user] : acc),
+        []
+      );
+    });
+  }
 }
 
 export const db = new DataBase();

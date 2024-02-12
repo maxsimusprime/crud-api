@@ -4,6 +4,7 @@ import { argv } from "node:process";
 import { read } from "./controllers/read";
 import { create } from "./controllers/create";
 import { update } from "./controllers/update";
+import { remove } from "./controllers/remove";
 
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = process.env.HOST || "localhost";
@@ -33,6 +34,7 @@ if (!isMulti) {
             update(request, response);
             break;
           case "DELETE":
+            remove(request, response);
             break;
           default:
             response.statusCode = 405;
