@@ -33,14 +33,16 @@ export const create: Controller = async (request, response) => {
           response.end();
         })
         .catch(() => {
-          response.statusCode = 400;
-          response.statusMessage = "Body Doesn't Contain Required Fields";
-          response.end();
+          response.writeHead(400, "Invalid Request");
+          response.end(
+            JSON.stringify({ message: "Body Doesn't Contain Required Fields" })
+          );
         });
     });
   } else {
-    response.statusCode = 400;
-    response.statusMessage = "Invalid API Endpoint URL";
-    response.end();
+    response.writeHead(400, "Invalid Request");
+    response.end(
+      JSON.stringify({ message: "Invalid API Endpoint URL" })
+    );
   }
 };

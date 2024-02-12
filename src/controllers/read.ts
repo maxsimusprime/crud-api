@@ -12,8 +12,8 @@ export const read: Controller = async (request, response) => {
   }
 
   if (request.url?.match(/^\/api\/users\/([abcdef\-0-9]+)$/)) {
-    const id = request.url.split('/')[3];
-    
+    const id = request.url.split("/")[3];
+
     if (id) {
       const users = await db.getUserById(id);
 
@@ -24,14 +24,16 @@ export const read: Controller = async (request, response) => {
         return;
       }
 
-      response.statusCode = 404;
-      response.statusMessage = "User With Provided Id Not Found";
-      response.end();
+      response.writeHead(404, "Not Found");
+      response.end(
+        JSON.stringify({ message: "User With Provided Id Not Found" })
+      );
       return;
     }
   }
 
-  response.statusCode = 400;
-  response.statusMessage = "Invalid User Id or User Id Was Not Provided";
-  response.end();
+  response.writeHead(400, "Invalid Request");
+  response.end(
+    JSON.stringify({ message: "Invalid User Id or User Id Was Not Provided" })
+  );
 };

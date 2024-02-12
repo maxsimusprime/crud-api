@@ -1,6 +1,9 @@
 # crud-api application
 - Crud-api is application that creates simple api server and provide simple interface to communicate via http.
 
+### How to install
+- run `npm install` inside application folder
+
 ### How to run
 Application support several commands to run:
 - `npm run start:dev` - to run in single-thread developing mode

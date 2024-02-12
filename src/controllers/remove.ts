@@ -11,18 +11,21 @@ export const remove: Controller = async (request, response) => {
       if (users.length > 0) {
         await db.removeUser(id);
 
-        response.statusCode = 204;
-        response.statusMessage = "User Was Deleted";
-        response.end();
+        response.writeHead(204, "OK");
+        response.end(
+          JSON.stringify({ message: `User Was Deleted` })
+        );
       } else {
-        response.statusCode = 404;
-        response.statusMessage = "User With Provided Id Not Found";
-        response.end();
+        response.writeHead(404, "Not Found");
+        response.end(
+          JSON.stringify({ message: "User With Provided Id Not Found" })
+        );
       }
     }
   } else {
-    response.statusCode = 400;
-    response.statusMessage = "Invalid User Id or User Id Was Not Provided";
-    response.end();
+    response.writeHead(400, "Invalid Request");
+    response.end(
+      JSON.stringify({ message: "Invalid User Id or User Id Was Not Provided" })
+    );
   }
 };

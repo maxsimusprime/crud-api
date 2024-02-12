@@ -19,9 +19,10 @@ if (!isMulti) {
       const { url, method } = request;
 
       if (!url?.startsWith("/api/users")) {
-        response.statusCode = 404;
-        response.statusMessage = "Invalid API Endpoint Route";
-        response.end();
+        response.writeHead(404, "Not Found");
+        response.end(
+          JSON.stringify({ message: "Invalid API Endpoint Route" })
+        );
       } else {
         switch (method) {
           case "GET":
@@ -37,16 +38,18 @@ if (!isMulti) {
             remove(request, response);
             break;
           default:
-            response.statusCode = 405;
-            response.statusMessage = "Invalid API request method";
-            response.end();
+            response.writeHead(405, "Invalid Request");
+            response.end(
+              JSON.stringify({ message: "Invalid API request method" })
+            );
             break;
         }
       }
     } catch (error) {
-      response.statusCode = 500;
-      response.statusMessage = "Internal Server Error";
-      response.end();
+      response.writeHead(500, "Server Error");
+      response.end(
+        JSON.stringify({ message: "Internal Server Error" })
+      );
     }
   });
 

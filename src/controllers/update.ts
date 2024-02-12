@@ -44,20 +44,23 @@ export const update: Controller = async (request, response) => {
               response.end();
             })
             .catch(() => {
-              response.statusCode = 400;
-              response.statusMessage = "Body Doesn't Contain Required Fields";
-              response.end();
+              response.writeHead(400, "Invalid Request");
+              response.end(
+                JSON.stringify({ message: "Body Doesn't Contain Required Fields" })
+              );
             });
         });
       } else {
-        response.statusCode = 404;
-        response.statusMessage = "User With Provided Id Not Found";
-        response.end();
+        response.writeHead(404, "Not Found");
+        response.end(
+          JSON.stringify({ message: "User With Provided Id Not Found" })
+        );
       }
     }
   } else {
-    response.statusCode = 400;
-    response.statusMessage = "Invalid User Id or User Id Was Not Provided";
-    response.end();
+    response.writeHead(400, "Invalid Request");
+    response.end(
+      JSON.stringify({ message: "Invalid User Id or User Id Was Not Provided" })
+    );
   }
 };
