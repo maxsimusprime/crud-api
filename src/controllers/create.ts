@@ -1,5 +1,6 @@
 import { db } from "../models/users";
 import type { Controller, UserData } from "types/types";
+import { isUserDataValid } from "../utils/isUserDataValid";
 
 export const create: Controller = async (request, response) => {
   if (request.url?.match(/^\/api\/users$/)) {
@@ -7,7 +8,6 @@ export const create: Controller = async (request, response) => {
 
     request.on("data", (chunk) => (body += chunk.toString()));
     request.on("end", async () => {
-      console.log("Body: ", body);
       await new Promise((resolve, reject) => {
         try {
           const userData = JSON.parse(body) as UserData;
@@ -17,20 +17,7 @@ export const create: Controller = async (request, response) => {
         }
       })
         .then((userData) => {
-          if (
-            userData instanceof Object &&
-            "username" in userData &&
-            typeof userData.username === "string" &&
-            "age" in userData &&
-            typeof userData.age === "number" &&
-            "hobbies" in userData &&
-            userData.hobbies instanceof Array
-          ) {
-            if (
-              userData.hobbies.filter((el) => typeof el !== "string").length > 0
-            ) {
-              throw new Error();
-            }
+          if (isUserDataValid(userData)) {
             return userData as UserData;
           } else {
             throw new Error();

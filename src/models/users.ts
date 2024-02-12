@@ -18,8 +18,16 @@ class DataBase {
 
   public async createUser(userData: UserData): Promise<User> {
     return new Promise((resolve) => {
-      const newUser: User = Object.assign({ id: randomUUID() }, userData);
+      const newUser: User = Object.assign(userData, { id: randomUUID() });
       this.users.push(newUser);
+      resolve(newUser);
+    });
+  }
+
+  public async updateUser(id: string, userData: UserData): Promise<User> {
+    return new Promise((resolve) => {
+      const newUser: User = Object.assign({ id, ...userData }, userData);
+      this.users.map((user) => (user.id === newUser.id ? newUser : user));
       resolve(newUser);
     });
   }

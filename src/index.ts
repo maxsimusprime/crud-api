@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import { argv } from "node:process";
 import { read } from "./controllers/read";
 import { create } from "./controllers/create";
+import { update } from "./controllers/update";
 
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = process.env.HOST || "localhost";
@@ -29,6 +30,7 @@ if (!isMulti) {
             create(request, response);
             break;
           case "PUT":
+            update(request, response);
             break;
           case "DELETE":
             break;
