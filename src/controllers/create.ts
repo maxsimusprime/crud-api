@@ -8,7 +8,14 @@ export const create: Controller = async (request, response) => {
     request.on("data", (chunk) => (body += chunk.toString()));
     request.on("end", async () => {
       console.log("Body: ", body);
-      await Promise.resolve(JSON.parse(body) as UserData)
+      await new Promise((resolve, reject) => {
+        try {
+          const userData = JSON.parse(body) as UserData;
+          resolve(userData);
+        } catch (error) {
+          reject(new Error());
+        }
+      })
         .then((userData) => {
           if (
             userData instanceof Object &&
