@@ -1,4 +1,5 @@
-import type { User } from "types/types";
+import type { User, UserData } from "types/types";
+import { randomUUID } from "node:crypto";
 
 class DataBase {
   private users: User[];
@@ -13,6 +14,14 @@ class DataBase {
 
   public async getUserById(id: string): Promise<User[]> {
     return Promise.resolve(this.users.filter((user) => user.id === id));
+  }
+
+  public async createUser(userData: UserData): Promise<User> {
+    return new Promise((resolve) => {
+      const newUser: User = Object.assign({ id: randomUUID() }, userData);
+      this.users.push(newUser);
+      resolve(newUser);
+    });
   }
 }
 
