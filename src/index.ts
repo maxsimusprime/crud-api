@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { createServer } from "node:http";
 import { argv } from "node:process";
+import { read } from "./controllers/read";
 
 const PORT = Number(process.env.PORT) || 4000;
 const HOST = process.env.HOST || "localhost";
@@ -16,6 +17,7 @@ if (!isMulti) {
   
       switch (method) {
         case "GET":
+          read(request, response);
           break;
         case "POST":
           break;
