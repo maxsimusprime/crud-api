@@ -1,7 +1,7 @@
 import type { User, UserData } from "types/types";
 import { randomUUID } from "node:crypto";
 
-class DataBase {
+export class DataBase {
   private users: User[];
 
   constructor(users?: User[]) {
@@ -26,8 +26,10 @@ class DataBase {
 
   public async updateUser(id: string, userData: UserData): Promise<User> {
     return new Promise((resolve) => {
-      const newUser: User = Object.assign({ id, ...userData }, userData);
-      this.users.map((user) => (user.id === newUser.id ? newUser : user));
+      const newUser: User = { ...userData, id };
+      this.users = this.users.map((user) =>
+        user.id === newUser.id ? newUser : user
+      );
       resolve(newUser);
     });
   }
