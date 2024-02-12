@@ -5,18 +5,13 @@ import { create } from "./controllers/create";
 import { update } from "./controllers/update";
 import { remove } from "./controllers/remove";
 
-const PORT = Number(process.env.PORT) || 4000;
-const HOST = "localhost";
-
-const server = createServer((request, response) => {
+export const server = createServer((request, response) => {
   try {
     const { url, method } = request;
 
     if (!url?.startsWith("/api/users")) {
       response.writeHead(404, "Not Found");
-      response.end(
-        JSON.stringify({ message: "Invalid API Endpoint Route" })
-      );
+      response.end(JSON.stringify({ message: "Invalid API Endpoint Route" }));
     } else {
       switch (method) {
         case "GET":
@@ -43,8 +38,4 @@ const server = createServer((request, response) => {
     response.writeHead(500, "Server Error");
     response.end(JSON.stringify({ message: "Internal Server Error" }));
   }
-});
-
-server.listen(PORT, HOST, () => {
-  console.log(`Listen on port ${PORT}`);
 });
